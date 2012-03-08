@@ -299,6 +299,21 @@ class File(FS):
         if self.exists:
             os.remove(self.path)
 
+    @property
+    def etag(self):
+        """
+        Generates etag from file contents.
+        """
+        CHUNKSIZE = 1024 * 64
+        from hashlib import md5
+        hash = md5()
+        with open(self.path) as fin:
+            chunk = fin.read(CHUNKSIZE)
+            while chunk:
+                hash.update(chunk)
+                chunk = fin.read(CHUNKSIZE)
+        return hash.hexdigest()
+
 
 class FSVisitor(object):
     """

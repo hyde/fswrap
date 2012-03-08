@@ -455,3 +455,26 @@ def test_lister_afolder():
     assert len(files) == 4
     assert len(folders) == 0
     assert len(complete) == 1
+
+def test_etag_same():
+    f1 = File.make_temp("I am new")
+    etag1 = f1.etag
+    f2 = File(f1.path)
+    etag2 = f2.etag
+    assert etag1 == etag2
+    f3 = File.make_temp("I am new")
+    etag3 = f3.etag
+    assert etag1 == etag3
+
+
+def test_etag_different():
+    f1 = File.make_temp("I am new")
+    etag1 = f1.etag
+    with open(f1.path, 'a') as fout:
+        fout.write(' ')
+    etag2 = f1.etag
+    assert etag1 != etag2
+    f1.write("I am New ")
+    etag3 = f1.etag
+    assert etag3 != etag1
+    assert etag3 != etag2
