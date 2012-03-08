@@ -1,0 +1,14 @@
+*~
+*.pyc
+.DS_Store
+*.cprof
+*.profile
+*.log
+pylint*
+*.tmproj
+.tmproperties
+build
+MANIFEST
+dist
+*egg*
+*gz

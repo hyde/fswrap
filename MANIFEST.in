@@ -1,0 +1,6 @@
+include setup.py
+include distribute_setup.py
+include fswrap.py
+include LICENSE
+include README.markdown
+recursive-include tests *.py *.txt *.html *.png *.xml
