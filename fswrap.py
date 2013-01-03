@@ -518,6 +518,12 @@ class Folder(FS):
         """
         return Folder(os.path.join(self.path, Folder(fragment).path))
 
+    def child_file(self, fragment):
+        """
+        Returns a `File` object representing the `fragment`.
+        """
+        return File(self.child(fragment))
+
     def child(self, fragment):
         """
         Returns a path of a child item represented by `fragment`.

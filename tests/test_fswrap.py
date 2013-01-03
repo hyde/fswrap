@@ -100,6 +100,12 @@ def test_child():
     assert c == os.path.join(os.path.dirname(__file__), 'data.dat')
 
 
+def test_child_file():
+    p = File(__file__).parent
+    f = p.child_file('data.dat')
+    assert f.path == os.path.join(os.path.dirname(__file__), 'data.dat')
+
+
 def test_child_folder():
     p = File(__file__).parent
     c = p.child_folder('data')
