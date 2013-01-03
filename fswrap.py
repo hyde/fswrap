@@ -537,6 +537,22 @@ class Folder(FS):
             pass
         return self
 
+    def zip(self, target=None, basepath=None):
+        """
+        Zips the contents of this folder. If `target` is not provided,
+        <name>.zip is used instead. `basepath` is used to specify the
+        base path for files in the archive. The path stored along with
+        the files in the archive will be relative to the `basepath`.
+        """
+        target = self.parent.child(target or self.name + '.zip')
+        basepath = basepath or self.path
+        from zipfile import ZipFile
+        with ZipFile(target, 'w') as zip:
+            with self.walker as walker:
+                @walker.file_visitor
+                def add_file(f):
+                    zip.write(f.path, f.get_relative_path(basepath))
+
     def delete(self):
         """
         Deletes the directory if it exists.

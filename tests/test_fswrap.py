@@ -264,6 +264,20 @@ def test_copy_folder():
 
 
 @with_setup(setup_data, cleanup_data)
+def test_zip_folder():
+    DATA_AFOLDER = DATA_ROOT.child_folder(AFOLDER.name)
+    DATA_AFOLDERX = DATA_ROOT.child_folder('afolderx')
+    AFOLDER.copy_to(DATA_ROOT)
+    ZIP = File(DATA_ROOT.child('afolder.zip'))
+    DATA_AFOLDER.zip(target=ZIP.path)
+    from zipfile import ZipFile
+    with ZipFile(ZIP.path, 'r') as z:
+        z.extractall(DATA_AFOLDERX.path)
+    for f in [HELPERS, INDEX, LAYOUT]:
+        assert File(DATA_AFOLDERX.child(f.name)).exists
+
+
+@with_setup(setup_data, cleanup_data)
 def test_copy_folder_target_missing():
     DATA_ROOT.delete()
     assert not DATA_ROOT.exists
