@@ -227,7 +227,6 @@ class File(FS):
         """Return true if this is an image file."""
         return self.mimetype.split("/")[0] == "image"
 
-
     @property
     def last_modified(self):
         """
