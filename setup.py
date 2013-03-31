@@ -9,7 +9,7 @@ except IOError:
 
 setup(
     name='fswrap',
-    version='0.1.1',
+    version='0.2',
     author='Lakshmi Vyas',
     author_email='lakshmi.vyas@gmail.com',
     url='http://github.com/lakshmivyas/fswrap',

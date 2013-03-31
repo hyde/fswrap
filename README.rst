@@ -1,4 +1,6 @@
-Version 0.1.1
+Version 0.2
+
+This branch requires Python 3.
 
 Unified object oriented interface for interacting with file system objects.
 File system operations in python are distributed across modules: os, os.path,

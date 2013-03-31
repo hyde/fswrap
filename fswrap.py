@@ -35,7 +35,7 @@ class FS(object):
             self.path = path
         else:
             self.path = os.path.expandvars(os.path.expanduser(
-                        unicode(path).strip().rstrip(os.sep)))
+                        str(path).strip().rstrip(os.sep)))
 
     def __str__(self):
         return self.path
@@ -44,10 +44,10 @@ class FS(object):
         return self.path
 
     def __eq__(self, other):
-        return unicode(self) == unicode(other)
+        return str(self) == str(other)
 
     def __ne__(self, other):
-        return unicode(self) != unicode(other)
+        return str(self) != str(other)
 
     @property
     def fully_expanded_path(self):
@@ -143,7 +143,7 @@ class FS(object):
         """
         Returns a File or Folder object that would represent the given path.
         """
-        target = unicode(path)
+        target = str(path)
         return Folder(target) if os.path.isdir(target) else File(target)
 
     def __get_destination__(self, destination):
@@ -151,7 +151,7 @@ class FS(object):
         Returns a File or Folder object that would represent this entity
         if it were copied or moved to `destination`.
         """
-        if isinstance(destination, File) or os.path.isfile(unicode(destination)):
+        if isinstance(destination, File) or os.path.isfile(str(destination)):
             return destination
         else:
             return FS.file_or_folder(Folder(destination).child(self.name))
@@ -211,7 +211,7 @@ class File(FS):
             CHUNKSIZE = 1024
             while 1:
                 chunk = fin.read(CHUNKSIZE)
-                if '\0' in chunk:
+                if b'\0' in chunk:
                     return True
                 if len(chunk) < CHUNKSIZE:
                     break
@@ -249,7 +249,7 @@ class File(FS):
         determine age.
 
         """
-        return self.last_modified < File(unicode(another_file)).last_modified
+        return self.last_modified < File(str(another_file)).last_modified
 
     @staticmethod
     def make_temp(text):
@@ -288,7 +288,7 @@ class File(FS):
         """
         target = self.__get_destination__(destination)
         logger.info("Copying %s to %s" % (self, target))
-        shutil.copy(self.path, unicode(destination))
+        shutil.copy(self.path, str(destination))
         return target
 
     def delete(self):
@@ -307,7 +307,7 @@ class File(FS):
         from hashlib import md5
         hash = md5()
         with open(self.path) as fin:
-            chunk = fin.read(CHUNKSIZE)
+            chunk = fin.read(CHUNKSIZE).encode(fin.encoding or 'utf-8')
             while chunk:
                 hash.update(chunk)
                 chunk = fin.read(CHUNKSIZE)
@@ -574,7 +574,7 @@ class Folder(FS):
         """
         target = self.__get_destination__(destination)
         logger.info("Copying %s to %s" % (self, target))
-        shutil.copytree(self.path, unicode(target))
+        shutil.copytree(self.path, str(target))
         return target
 
     def move_to(self, destination):
@@ -584,7 +584,7 @@ class Folder(FS):
         """
         target = self.__get_destination__(destination)
         logger.info("Move %s to %s" % (self, target))
-        shutil.move(self.path, unicode(target))
+        shutil.move(self.path, str(target))
         return target
 
     def rename_to(self, destination_name):
@@ -594,7 +594,7 @@ class Folder(FS):
         """
         target = self.parent.child_folder(destination_name)
         logger.info("Rename %s to %s" % (self, target))
-        shutil.move(self.path, unicode(target))
+        shutil.move(self.path, str(target))
         return target
 
     def _create_target_tree(self, target):
@@ -623,7 +623,7 @@ class Folder(FS):
         target = Folder(destination)
         target.make()
         self._create_target_tree(target)
-        dir_util.copy_tree(self.path, unicode(target))
+        dir_util.copy_tree(self.path, str(target))
         return target
 
     def get_walker(self, pattern=None):
