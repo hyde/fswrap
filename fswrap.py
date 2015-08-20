@@ -15,6 +15,7 @@ from distutils import dir_util
 import functools
 import fnmatch
 import logging
+import sys
 
 logger = logging.getLogger('fswrap')
 
@@ -22,6 +23,12 @@ logger = logging.getLogger('fswrap')
 
 
 __all__ = ['File', 'Folder']
+
+
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    unicode = str
 
 
 class FS(object):
@@ -211,7 +218,7 @@ class File(FS):
             CHUNKSIZE = 1024
             while 1:
                 chunk = fin.read(CHUNKSIZE)
-                if '\0' in chunk:
+                if b'\0' in chunk:
                     return True
                 if len(chunk) < CHUNKSIZE:
                     break
@@ -309,7 +316,7 @@ class File(FS):
         with open(self.path) as fin:
             chunk = fin.read(CHUNKSIZE)
             while chunk:
-                hash.update(chunk)
+                hash.update(chunk.encode())
                 chunk = fin.read(CHUNKSIZE)
         return hash.hexdigest()
 
