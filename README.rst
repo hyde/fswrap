@@ -1,4 +1,4 @@
-Version 0.1.2
+Version 1.0.0
 
 Unified object oriented interface for interacting with file system
 objects. File system operations in python are distributed across
@@ -16,3 +16,6 @@ Contributors
 
 *   Laurent Bachelier (laurentb)
     - Fix packaging issues. (#2)
+
+*   Jon Banafato (jonafato)
+    - Python 2 and 3 compatibility (#3)

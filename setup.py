@@ -9,10 +9,10 @@ except IOError:
 
 setup(
     name='fswrap',
-    version='0.1.2',
+    version='1.0.0',
     author='Lakshmi Vyas',
     author_email='lakshmi.vyas@gmail.com',
-    url='http://github.com/lakshmivyas/fswrap',
+    url='http://github.com/hyde/fswrap',
     description='An opinionated wrapper on file system and path functions',
     long_description=long_description,
     license='MIT',
