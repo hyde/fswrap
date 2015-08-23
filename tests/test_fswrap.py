@@ -9,8 +9,14 @@ from fswrap import FS, File, Folder
 import codecs
 import os
 import shutil
+import sys
 
 from nose.tools import with_setup, nottest
+
+PY3 = sys.version_info[0] == 3
+
+if PY3:
+    unicode = str
 
 
 def test_representation():

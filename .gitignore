@@ -12,3 +12,5 @@ MANIFEST
 dist
 *egg*
 *gz
+.coverage
+.tox
