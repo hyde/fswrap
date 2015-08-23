@@ -63,10 +63,10 @@ class FS(object):
         normpath, normcase, expandvars and expanduser).
         """
         return os.path.abspath(
-        os.path.normpath(
-        os.path.normcase(
-        os.path.expandvars(
-        os.path.expanduser(self.path)))))
+            os.path.normpath(
+                os.path.normcase(
+                    os.path.expandvars(
+                        os.path.expanduser(self.path)))))
 
     @property
     def exists(self):
@@ -128,8 +128,8 @@ class FS(object):
             return ''
         ancestors = self.ancestors(stop=root)
         return functools.reduce(lambda f, p: Folder(p.name).child(f),
-                                            ancestors,
-                                            self.name)
+                                ancestors,
+                                self.name)
 
     def get_mirror(self, target_root, source_root=None):
         """
@@ -158,7 +158,8 @@ class FS(object):
         Returns a File or Folder object that would represent this entity
         if it were copied or moved to `destination`.
         """
-        if isinstance(destination, File) or os.path.isfile(unicode(destination)):
+        if isinstance(destination,
+                      File) or os.path.isfile(unicode(destination)):
             return destination
         else:
             return FS.file_or_folder(Folder(destination).child(self.name))
@@ -382,8 +383,8 @@ class FolderWalker(FSVisitor):
                 yield folder
             if walk_files:
                 for a_file in a_files:
-                    if (not self.pattern or
-                        fnmatch.fnmatch(a_file, self.pattern)):
+                    if (not self.pattern or fnmatch.fnmatch(a_file,
+                                                            self.pattern)):
                         yield File(folder.child(a_file))
 
     def walk_all(self):
