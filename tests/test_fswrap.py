@@ -213,9 +213,13 @@ def test_is_descendant_of():
 
 
 def test_get_relative_path():
-    assert INDEX.get_relative_path(ROOT_FOLDER) == Folder(AFOLDER.name).child(INDEX.name)
+    assert INDEX.get_relative_path(ROOT_FOLDER) == Folder(
+        AFOLDER.name).child(INDEX.name)
+
     assert INDEX.get_relative_path(ROOT_FOLDER.parent) == Folder(
-                        ROOT_FOLDER.name).child_folder(AFOLDER.name).child(INDEX.name)
+                        ROOT_FOLDER.name).child_folder(
+                            AFOLDER.name).child(INDEX.name)
+
     assert AFOLDER.get_relative_path(AFOLDER) == ""
 
 
@@ -223,7 +227,8 @@ def test_get_mirror():
     mirror = AFOLDER.get_mirror(DATA_ROOT, source_root=ROOT_FOLDER)
     assert mirror == DATA_ROOT.child_folder(AFOLDER.name)
     mirror = AFOLDER.get_mirror(DATA_ROOT, source_root=ROOT_FOLDER.parent)
-    assert mirror == DATA_ROOT.child_folder(ROOT_FOLDER.name).child_folder(AFOLDER.name)
+    assert mirror == DATA_ROOT.child_folder(
+        ROOT_FOLDER.name).child_folder(AFOLDER.name)
 
 
 def test_mimetype():
@@ -534,6 +539,17 @@ def test_etag_same():
     etag2 = f2.etag
     assert etag1 == etag2
     f3 = File.make_temp("I am new")
+    etag3 = f3.etag
+    assert etag1 == etag3
+
+
+def test_etag_unicode_same():
+    f1 = File.make_temp(u"\x80\x81")
+    etag1 = f1.etag
+    f2 = File(f1.path)
+    etag2 = f2.etag
+    assert etag1 == etag2
+    f3 = File.make_temp(u"\x80\x81")
     etag3 = f3.etag
     assert etag1 == etag3
 

@@ -30,6 +30,14 @@ PY3 = sys.version_info[0] == 3
 if PY3:
     unicode = str
 
+    def hash_update(hsh, chunk):
+        hsh.update(chunk.encode())
+
+else:
+    def hash_update(hsh, chunk):
+        hsh.update(chunk)
+
+
 
 class FS(object):
     """
@@ -317,7 +325,7 @@ class File(FS):
         with open(self.path) as fin:
             chunk = fin.read(CHUNKSIZE)
             while chunk:
-                hash.update(chunk.encode())
+                hash_update(hash, chunk)
                 chunk = fin.read(CHUNKSIZE)
         return hash.hexdigest()
 

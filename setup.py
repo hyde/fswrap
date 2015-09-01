@@ -9,15 +9,15 @@ except IOError:
 
 setup(
     name='fswrap',
-    version='1.0.0',
-    author='Lakshmi Vyas',
-    author_email='lakshmi.vyas@gmail.com',
+    version='1.0.1',
+    author='fswrap contributors',
+    author_email='navilan@folds.in',
     url='http://github.com/hyde/fswrap',
     description='An opinionated wrapper on file system and path functions',
     long_description=long_description,
     license='MIT',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
