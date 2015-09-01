@@ -1,4 +1,4 @@
-Version 1.0.0
+Version 1.0.1
 
 Unified object oriented interface for interacting with file system
 objects. File system operations in python are distributed across
